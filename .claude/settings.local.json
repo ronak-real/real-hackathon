@@ -20,7 +20,8 @@
       "Bash(curl:*)",
       "Bash(npm test:*)",
       "Bash(chmod:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }

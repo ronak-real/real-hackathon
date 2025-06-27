@@ -2,6 +2,13 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+// Debug log
+console.log('Auth API Configuration:', {
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  API_BASE_URL: API_BASE_URL,
+  mode: import.meta.env.MODE
+});
+
 const authApi = axios.create({
   baseURL: API_BASE_URL,
   headers: {

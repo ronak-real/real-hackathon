@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>SpendWise API Configuration Test</h1>
+    <div id="results"></div>
+    
+    <script type="module">
+        // Test the API configuration
+        const results = document.getElementById('results');
+        
+        // Import the API configuration
+        import('./src/services/api.js').then(module => {
+            results.innerHTML = `
+                <h2>API Configuration:</h2>
+                <p><strong>Environment Variable (VITE_API_URL):</strong> ${import.meta.env.VITE_API_URL || 'Not set'}</p>
+                <p><strong>Default URL:</strong> http://localhost:5000/api</p>
+                <p><strong>Actual URL being used:</strong> ${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}</p>
+                <h3>Test API Call:</h3>
+            `;
+            
+            // Test API call
+            fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/health`)
+                .then(res => res.json())
+                .then(data => {
+                    results.innerHTML += `<p style="color: green;">✓ API is working: ${JSON.stringify(data)}</p>`;
+                })
+                .catch(err => {
+                    results.innerHTML += `<p style="color: red;">✗ API Error: ${err.message}</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
