@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss init:*)",
+      "Bash(npm init:*)",
+      "Bash(npm test)",
+      "Bash(mv:*)",
+      "Bash(timeout 5 npm start)",
+      "Bash(true)",
+      "Bash(node:*)",
+      "Bash(rm:*)",
+      "Bash(grep:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": []
+  }
+}
