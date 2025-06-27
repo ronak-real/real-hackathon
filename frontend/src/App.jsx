@@ -131,7 +131,7 @@ function App() {
       <main className="container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-7xl mx-auto">
           {activeTab === 'dashboard' && (
-            <Dashboard data={dashboardData} />
+            <Dashboard data={dashboardData} onDataUpdate={handleDataUpdate} />
           )}
           
           {activeTab === 'income' && (

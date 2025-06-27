@@ -31,102 +31,123 @@ const JethalalMascot = ({ emotion = 'happy', size = 'large' }) => {
         {/* Background circle */}
         <circle cx="100" cy="100" r="95" fill="url(#bgGradient)" />
         
-        {/* Face */}
-        <ellipse cx="100" cy="100" rx="70" ry="75" fill="#FDBCB4" stroke="#8B4513" strokeWidth="2"/>
+        {/* Face - rounder to match reference */}
+        <circle cx="100" cy="100" r="75" fill="#F5DEB3" stroke="#8B6F47" strokeWidth="2"/>
         
-        {/* Hair */}
-        <path d="M 40 70 Q 30 50, 50 40 Q 70 30, 100 35 Q 130 30, 150 40 Q 170 50, 160 70" 
-              fill="#2C1810" stroke="#1a0f08" strokeWidth="1"/>
+        {/* Hair - shorter and more realistic */}
+        <path d="M 35 75 C 35 45, 65 25, 100 30 C 135 25, 165 45, 165 75 L 165 80 C 160 70, 140 65, 100 65 C 60 65, 40 70, 35 80 Z" 
+              fill="#1C1C1C" stroke="#000000" strokeWidth="1"/>
         
         {/* Eyes */}
         <g id="eyes">
           {/* Left eye */}
-          <ellipse cx="75" cy="85" rx="15" ry="18" fill="white" stroke="#333" strokeWidth="1"/>
-          <circle cx="75" cy="87" r="8" fill="#4A2C17"/>
-          <circle cx="77" cy="85" r="3" fill="black"/>
+          <ellipse cx="75" cy="85" rx="12" ry="15" fill="white" stroke="#333" strokeWidth="1.5"/>
+          <circle cx="75" cy="87" r="7" fill="#3E2723"/>
+          <circle cx="76" cy="85" r="2" fill="black"/>
+          <circle cx="73" cy="84" r="1" fill="white"/>
           
           {/* Right eye */}
-          <ellipse cx="125" cy="85" rx="15" ry="18" fill="white" stroke="#333" strokeWidth="1"/>
-          <circle cx="125" cy="87" r="8" fill="#4A2C17"/>
-          <circle cx="127" cy="85" r="3" fill="black"/>
+          <ellipse cx="125" cy="85" rx="12" ry="15" fill="white" stroke="#333" strokeWidth="1.5"/>
+          <circle cx="125" cy="87" r="7" fill="#3E2723"/>
+          <circle cx="126" cy="85" r="2" fill="black"/>
+          <circle cx="123" cy="84" r="1" fill="white"/>
           
-          {/* Eyebrows based on emotion */}
+          {/* Eyebrows - thicker and more expressive */}
           {emotion === 'worried' && (
             <>
-              <path d="M 60 75 Q 75 70, 90 75" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
-              <path d="M 110 75 Q 125 70, 140 75" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M 58 75 Q 75 68, 88 75" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M 112 75 Q 125 68, 142 75" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
             </>
           )}
           {emotion === 'shocked' && (
             <>
-              <path d="M 60 70 Q 75 65, 90 70" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
-              <path d="M 110 70 Q 125 65, 140 70" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M 58 68 Q 75 60, 88 68" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M 112 68 Q 125 60, 142 68" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
             </>
           )}
           {emotion === 'happy' && (
             <>
-              <path d="M 60 78 Q 75 73, 90 78" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
-              <path d="M 110 78 Q 125 73, 140 78" fill="none" stroke="#2C1810" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M 58 78 Q 75 73, 88 78" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M 112 78 Q 125 73, 142 78" fill="none" stroke="#1C1C1C" strokeWidth="4" strokeLinecap="round"/>
             </>
           )}
         </g>
         
-        {/* Nose */}
-        <path d="M 100 95 Q 95 110, 100 115 Q 105 110, 100 95" 
-              fill="#E8A98C" stroke="#8B4513" strokeWidth="1"/>
+        {/* Nose - more prominent */}
+        <path d="M 100 95 L 95 110 Q 100 115, 105 110 L 100 95" 
+              fill="#E5C29F" stroke="#8B6F47" strokeWidth="1.5"/>
         
-        {/* Mustache */}
+        {/* Mustache - Napoleon/toothbrush style */}
         <g id="mustache">
-          <path d="M 70 120 Q 60 125, 55 130 Q 60 135, 75 130 Q 85 125, 100 125 Q 115 125, 125 130 Q 140 135, 145 130 Q 140 125, 130 120"
-                fill="#2C1810" stroke="#1a0f08" strokeWidth="1"/>
+          <rect x="85" y="118" width="30" height="8" rx="1" fill="#1C1C1C" stroke="#000000" strokeWidth="0.5"/>
         </g>
         
         {/* Mouth based on emotion */}
         {emotion === 'happy' && (
-          <path d="M 70 140 Q 100 155, 130 140" 
-                fill="none" stroke="#8B4513" strokeWidth="3" strokeLinecap="round"/>
+          <>
+            <path d="M 65 140 Q 100 160, 135 140" 
+                  fill="#D2691E" stroke="#8B4513" strokeWidth="2"/>
+            <path d="M 65 140 Q 100 155, 135 140" 
+                  fill="white" stroke="none"/>
+            {/* Teeth */}
+            <rect x="80" y="142" width="8" height="8" fill="white" stroke="#999" strokeWidth="0.5"/>
+            <rect x="88" y="143" width="8" height="9" fill="white" stroke="#999" strokeWidth="0.5"/>
+            <rect x="96" y="143" width="8" height="9" fill="white" stroke="#999" strokeWidth="0.5"/>
+            <rect x="104" y="143" width="8" height="9" fill="white" stroke="#999" strokeWidth="0.5"/>
+            <rect x="112" y="142" width="8" height="8" fill="white" stroke="#999" strokeWidth="0.5"/>
+          </>
         )}
         {emotion === 'worried' && (
-          <path d="M 70 145 Q 100 140, 130 145" 
+          <path d="M 75 145 Q 100 140, 125 145" 
                 fill="none" stroke="#8B4513" strokeWidth="3" strokeLinecap="round"/>
         )}
         {emotion === 'shocked' && (
-          <ellipse cx="100" cy="145" rx="20" ry="15" fill="#8B4513" opacity="0.3"/>
+          <ellipse cx="100" cy="145" rx="25" ry="20" fill="#8B4513" stroke="#654321" strokeWidth="2"/>
         )}
         
         {/* Ears */}
-        <ellipse cx="35" cy="100" rx="15" ry="25" fill="#FDBCB4" stroke="#8B4513" strokeWidth="2"/>
-        <ellipse cx="165" cy="100" rx="15" ry="25" fill="#FDBCB4" stroke="#8B4513" strokeWidth="2"/>
+        <ellipse cx="30" cy="100" rx="18" ry="28" fill="#F5DEB3" stroke="#8B6F47" strokeWidth="2"/>
+        <ellipse cx="170" cy="100" rx="18" ry="28" fill="#F5DEB3" stroke="#8B6F47" strokeWidth="2"/>
         
-        {/* Shirt collar */}
-        <path d="M 50 160 Q 100 170, 150 160 L 150 190 L 50 190 Z" 
-              fill="#FF6B35" stroke="#D84315" strokeWidth="2"/>
-        <path d="M 90 170 L 100 180 L 110 170" 
-              fill="white" stroke="#D84315" strokeWidth="1"/>
+        {/* Orange shirt with collar */}
+        <path d="M 40 165 L 40 190 L 160 190 L 160 165 C 160 160, 155 155, 150 155 L 125 160 L 100 165 L 75 160 L 50 155 C 45 155, 40 160, 40 165 Z" 
+              fill="#FF7F00" stroke="#E55100" strokeWidth="2"/>
+        
+        {/* Collar */}
+        <path d="M 70 155 L 85 165 L 100 170 L 115 165 L 130 155" 
+              fill="none" stroke="#E55100" strokeWidth="2"/>
+        <path d="M 85 165 L 85 175" stroke="#E55100" strokeWidth="2"/>
+        <path d="M 115 165 L 115 175" stroke="#E55100" strokeWidth="2"/>
         
         {/* Gradients */}
         <defs>
           <radialGradient id="bgGradient">
-            <stop offset="0%" stopColor="#FFE5B4" />
-            <stop offset="100%" stopColor="#FFCC99" />
+            <stop offset="0%" stopColor="#FFF8DC" />
+            <stop offset="100%" stopColor="#FFE4B5" />
           </radialGradient>
         </defs>
         
         {/* Emotion indicators */}
         {emotion === 'worried' && (
           <g>
-            <circle cx="60" cy="110" r="3" fill="#87CEEB" opacity="0.7">
-              <animate attributeName="cy" values="110;115;110" dur="1s" repeatCount="indefinite"/>
+            <circle cx="55" cy="105" r="4" fill="#4FC3F7" opacity="0.8">
+              <animate attributeName="cy" values="105;112;105" dur="1.5s" repeatCount="indefinite"/>
             </circle>
-            <circle cx="65" cy="115" r="2" fill="#87CEEB" opacity="0.5">
-              <animate attributeName="cy" values="115;120;115" dur="1s" repeatCount="indefinite"/>
+            <circle cx="60" cy="110" r="3" fill="#4FC3F7" opacity="0.6">
+              <animate attributeName="cy" values="110;116;110" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
             </circle>
           </g>
         )}
         {emotion === 'shocked' && (
           <g>
-            <text x="30" y="50" fontSize="20" fill="#FF6B35" fontWeight="bold">!</text>
-            <text x="160" y="50" fontSize="20" fill="#FF6B35" fontWeight="bold">!</text>
+            <text x="25" y="45" fontSize="24" fill="#FF4500" fontWeight="bold" fontFamily="Arial">!</text>
+            <text x="155" y="45" fontSize="24" fill="#FF4500" fontWeight="bold" fontFamily="Arial">!</text>
+            <line x1="70" y1="50" x2="75" y2="45" stroke="#FFD700" strokeWidth="2">
+              <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+            </line>
+            <line x1="125" y1="45" x2="130" y2="50" stroke="#FFD700" strokeWidth="2">
+              <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+            </line>
           </g>
         )}
       </svg>

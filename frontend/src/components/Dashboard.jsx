@@ -1,7 +1,16 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import JethalalMascot from './JethalalMascot';
+import Analytics from './Analytics';
+import { goalService } from '../services/api';
 
-const Dashboard = ({ data }) => {
+const Dashboard = ({ data, onDataUpdate }) => {
+  const [showFundModal, setShowFundModal] = useState(false);
+  const [selectedGoal, setSelectedGoal] = useState(null);
+  const [fundAmount, setFundAmount] = useState('');
+  const [fundingLoading, setFundingLoading] = useState(false);
+  const [fundError, setFundError] = useState('');
+
   if (!data) {
     return (
       <div className="text-center py-8">
@@ -12,6 +21,35 @@ const Dashboard = ({ data }) => {
   }
 
   const { totalIncome, totalExpenses, savings, savingsRate, recentTransactions, goals } = data;
+
+  const handleAddFunds = async (e) => {
+    e.preventDefault();
+    if (!selectedGoal || !fundAmount) return;
+
+    setFundingLoading(true);
+    setFundError('');
+
+    try {
+      await goalService.addFunds(selectedGoal.id, parseFloat(fundAmount));
+      setShowFundModal(false);
+      setFundAmount('');
+      setSelectedGoal(null);
+      if (onDataUpdate) {
+        onDataUpdate();
+      }
+    } catch (error) {
+      setFundError(error.response?.data?.error || 'Failed to add funds');
+    } finally {
+      setFundingLoading(false);
+    }
+  };
+
+  const openFundModal = (goal) => {
+    setSelectedGoal(goal);
+    setShowFundModal(true);
+    setFundAmount('');
+    setFundError('');
+  };
 
   const getSavingsColor = () => {
     if (savings < 0) return 'from-danger to-danger-dark';
@@ -179,6 +217,14 @@ const Dashboard = ({ data }) => {
                         Deadline: {new Date(goal.deadline).toLocaleDateString()}
                       </p>
                     )}
+                    {progress < 100 && (
+                      <button
+                        onClick={() => openFundModal(goal)}
+                        className="mt-3 w-full bg-gradient-to-r from-accent to-accent-dark text-white py-2 px-4 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all text-sm"
+                      >
+                        Add Funds 💸
+                      </button>
+                    )}
                   </div>
                 );
               })}
@@ -186,6 +232,11 @@ const Dashboard = ({ data }) => {
           )}
         </motion.div>
       </div>
+
+      {/* Analytics Section */}
+      {data.analytics && (
+        <Analytics analytics={data.analytics} />
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -220,6 +271,81 @@ const Dashboard = ({ data }) => {
           </div>
         </div>
       </motion.div>
+
+      {/* Fund Modal */}
+      {showFundModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl"
+          >
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Add Funds to Goal</h3>
+            
+            {selectedGoal && (
+              <div className="mb-6">
+                <p className="text-lg font-semibold text-gray-700">{selectedGoal.title}</p>
+                <div className="mt-2">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Current: ₹{selectedGoal.currentAmount}</span>
+                    <span>Target: ₹{selectedGoal.targetAmount}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
+                    <div 
+                      className="h-3 bg-gradient-to-r from-accent to-accent-dark rounded-full"
+                      style={{ width: `${Math.min((selectedGoal.currentAmount / selectedGoal.targetAmount) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Maximum you can add: ₹{selectedGoal.targetAmount - selectedGoal.currentAmount}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleAddFunds} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Amount to Add
+                </label>
+                <input
+                  type="number"
+                  value={fundAmount}
+                  onChange={(e) => setFundAmount(e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-accent-light focus:border-accent transition-all"
+                  placeholder="Enter amount"
+                  min="1"
+                  max={selectedGoal ? selectedGoal.targetAmount - selectedGoal.currentAmount : undefined}
+                  required
+                />
+              </div>
+
+              {fundError && (
+                <div className="bg-red-100 border-2 border-red-300 text-red-700 px-4 py-3 rounded-xl text-sm">
+                  {fundError}
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  disabled={fundingLoading}
+                  className="flex-1 bg-gradient-to-r from-accent to-accent-dark text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {fundingLoading ? 'Adding...' : 'Add Funds'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowFundModal(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };

@@ -222,6 +222,19 @@ app.get('/api/dashboard', authenticateUser, (req, res) => {
   const totalExpenses = userExpenses.reduce((sum, exp) => sum + exp.amount, 0);
   const savings = totalIncome - totalExpenses;
   
+  // Calculate category-wise analytics
+  const incomeByCategory = userIncome.reduce((acc, inc) => {
+    const category = inc.category || 'other';
+    acc[category] = (acc[category] || 0) + inc.amount;
+    return acc;
+  }, {});
+  
+  const expenseByCategory = userExpenses.reduce((acc, exp) => {
+    const category = exp.category || 'other';
+    acc[category] = (acc[category] || 0) + exp.amount;
+    return acc;
+  }, {});
+  
   res.json({
     totalIncome,
     totalExpenses,
@@ -231,7 +244,11 @@ app.get('/api/dashboard', authenticateUser, (req, res) => {
       ...userIncome.slice(-5).map(i => ({ ...i, type: 'income' })),
       ...userExpenses.slice(-5).map(e => ({ ...e, type: 'expense' }))
     ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10),
-    goals: userGoals
+    goals: userGoals,
+    analytics: {
+      incomeByCategory,
+      expenseByCategory
+    }
   });
 });
 

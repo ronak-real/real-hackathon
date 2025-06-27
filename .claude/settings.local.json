@@ -17,7 +17,8 @@
       "Bash(rm:*)",
       "Bash(grep:*)",
       "Bash(npm uninstall:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }
