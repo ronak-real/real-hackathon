@@ -319,4 +319,8 @@ if (require.main === module) {
   });
 }
 
-module.exports = { app, db };
+// Export for Vercel
+module.exports = app;
+// Also export for testing
+module.exports.app = app;
+module.exports.db = db;

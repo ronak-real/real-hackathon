@@ -1,0 +1,8 @@
+*.test.js
+test-api.sh
+API_TEST_CURLS.md
+.env.local
+node_modules
+.git
+README.md
+VERCEL_DEPLOYMENT.md
