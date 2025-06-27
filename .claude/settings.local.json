@@ -21,7 +21,8 @@
       "Bash(npm test:*)",
       "Bash(chmod:*)",
       "Bash(npm run build:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(kill:*)"
     ],
     "deny": []
   }
